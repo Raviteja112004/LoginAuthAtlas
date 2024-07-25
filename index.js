@@ -1,3 +1,4 @@
+
 const express = require('express');
 const bcrypt=require('bcrypt');
 const path = require('path');
@@ -17,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.render('home', { content: 'Log in', form: '/login' });
+    res.render('home', { content: 'Log in', form: '/login',user:'User' });
 });
 
 app.get('/login', (req, res) => {
@@ -56,7 +57,7 @@ app.post('/login', async (req, res) => {
         } else {
             const isMatch = await bcrypt.compare(req.body.password, user.password);
             if (isMatch) {
-                res.render('home', { content: 'Log Out', user: `Hello ${req.body.name}`, form: '/', successMessage: 'Login successful!' });
+                res.render('home', { content: 'Log Out', user:req.body.name, form: '/', successMessage: 'Login successful!' });
             } else {
                 res.render('login', { wrongPassword: 'Wrong Password' });
             }
